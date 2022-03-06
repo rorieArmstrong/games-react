@@ -1,0 +1,85 @@
+:root {
+  --block-color: #394D61;
+  --bg-color: #16181C;
+}
+body{
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  color: white;
+}
+div.grid{
+  margin: 20px auto;
+  width: 700px;
+  height: 700px;
+  background: #2D3139;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-temaplte-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: 20px;
+  padding: 10px;
+}
+.grid.won .block{
+  background: #2a8040;
+}
+.grid.lost .block{
+  background: #F22300;
+}
+
+.block{
+  background: #394D61;
+  width: 100%;
+  height: 100%;
+  border-radius: 2px;
+  cursor: pointer;
+}
+.block.show,.block.correct{
+  background: #bfbfbf;
+}
+.block.incorrect{
+  background: #F22300;
+}
+.grid.lost .show.block {
+  background: #6d9070;
+}
+.grid.lost .block {
+  background: #bd5151;
+}
+
+.grid.lost .block.clicked.incorrect {
+  background: #F22300;
+}
+.grid.lost .block.clicked.correct {
+  background: #bfbfbf;
+}
+
+.restart-button{
+  display: block;
+  padding: 12px 60px;
+  background: #394D61;
+  color: white;
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+button{
+  display: block;
+  padding: 12px 60px;
+  background: #394D61;
+  color: white;
+  margin-top: 30px;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+div.group {
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: space-between;
+}
