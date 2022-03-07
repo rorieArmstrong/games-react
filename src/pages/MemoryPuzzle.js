@@ -26,8 +26,8 @@ class MemoryPuzzle extends Component {
         };
 
     restartGame = () => {
-        this.setState({activateClicking : false, gridCorrectBlocks: this.generateRandomNumberBetween(), correct: []});
-        this.setState({gridClass:'grid',correct: this.state.gridCorrectBlocks, incorrect: []});
+        let grid = this.generateRandomNumberBetween()
+        this.setState({activateClicking : false, gridCorrectBlocks: grid, correct: grid, gridClass:'grid', incorrect: []});
         setTimeout(()=>{
             this.setState({activateClicking : true, correct: []})
             console.log("Restarted")
@@ -46,14 +46,13 @@ class MemoryPuzzle extends Component {
         }
 
     isGameWon = () => {
-        return this.state.correct.length >= 2*(this.state.size+1);
+        return this.state.correct.length+1 >= 2*(this.state.size+1);
         }
     isGameLost= () => {
-        return this.state.incorrect.length >= window.maxIncorrectBlocksNum;
+        return this.state.incorrect.length+1 >= this.state.maxIncorrectBlocksNum;
         }
 
     onBlockClick = (e) => {
-        console.log(e)
         if(!this.state.activateClicking){
           return;
         }
@@ -69,15 +68,16 @@ class MemoryPuzzle extends Component {
         let correct = correctBlocks.indexOf(blockNum) !== -1;
         console.log(blockNum, correct, correctBlocks);
         if(correct){
-            this.setState({ correct: [...this.state.correct, blockNum] })
+            this.setState({ correct: [...this.state.correct, blockNum] });
         }
         else{
-            this.setState({ incorrect: [...this.state.correct, blockNum] })
-        }
+            this.setState({ incorrect: [...this.state.incorrect, blockNum] });
+        };
         
         this.checkWinOrLost();
         
     }
+    
 
     render() {
         return (
@@ -95,7 +95,7 @@ class MemoryPuzzle extends Component {
                 </div>
                 <div className={this.state.gridClass} id='grid'>
                     {[...Array((this.state.size)**2).keys()].map(i => {
-                            return (<div id={i} className={`block block-${i+1} ${i in this.state.correct ? "correct show" : i in this.state.correct ? "incorrect show": ""} `} onClick={(e) => {this.onBlockClick(e)}} key={i}></div>)})
+                            return (<div id={i} className={`block block-${i+1} ${this.state.correct.includes(i) ? "correct show" : this.state.incorrect.includes(i) ? "incorrect show": ""} `} onClick={(e) => {this.onBlockClick(e)}} key={i}></div>)})
                     }
                 </div>
                     
