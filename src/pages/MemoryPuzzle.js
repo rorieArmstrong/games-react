@@ -95,7 +95,7 @@ class MemoryPuzzle extends Component {
                 </div>
                 <div className={this.state.gridClass} id='grid'>
                     {[...Array((this.state.size)**2).keys()].map(i => {
-                            return (<div id={i} className={`block block-${i+1} ${this.state.correct.includes(i) ? "correct show" : this.state.incorrect.includes(i) ? "incorrect show": ""} `} onClick={(e) => {this.onBlockClick(e)}} key={i}></div>)})
+                            return (<div id={i} className={`block block-${i+1} ${this.state.correct.includes(i) ? "clicked correct" : this.state.incorrect.includes(i) ? "incorrect": ""} `} onClick={(e) => {this.onBlockClick(e)}} key={i}></div>)})
                     }
                 </div>
                     
