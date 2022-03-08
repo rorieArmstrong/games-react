@@ -19,7 +19,6 @@ class MemoryPuzzle extends Component {
     generateRandomNumberBetween = (min=1,max=(this.state.size)**2,length = 2*(this.state.size+1)) => {
         var arr = [];
         while(arr.length < length){
-            console.log("generated grid");
             var r = Math.floor(Math.random() * (max+1-min)) + min;
             if(arr.indexOf(r) === -1) {arr.push(r)};
         }
@@ -27,33 +26,25 @@ class MemoryPuzzle extends Component {
         };
 
     restartGame = (size) => {
-        console.log("restarting...",2*(size+1));
         var grid = this.generateRandomNumberBetween(1,size**2,2*(size+1));
-        console.log("generated grid");
         this.setState({activateClicking : false, gridCorrectBlocks: grid, correct: grid, gridClass:'grid', incorrect: []});
-        console.log("restarting...");
         setTimeout(()=>{
             this.setState({activateClicking : true, correct: []})
-            console.log("Restarted")
         }, this.state.timeBlocksShows*1000);
         }
     
     checkWinOrLost = () => {
-        if(this.isGameWon()){
-            this.setState({gridClass:'grid won', activateClicking : false})
+        if(!this.state.activateClicking){
+            return
+        };
+        if(this.state.correct.length >= 2*(this.state.size+1)){
+            this.setState({gridClass:'grid won', activateClicking : false});
             return "won";
-        }
-        if(this.isGameLost()){
-            this.setState({gridClass:'grid lost', activateClicking : false, correct: this.state.gridCorrectBlocks})
+        };
+        if(this.state.incorrect.length >= this.state.maxIncorrectBlocksNum){
+            this.setState({gridClass:'grid lost', activateClicking : false, correct: this.state.gridCorrectBlocks});
             return "lost";
-        }
-        }
-
-    isGameWon = () => {
-        return this.state.correct.length+1 >= 2*(this.state.size+1);
-        }
-    isGameLost= () => {
-        return this.state.incorrect.length+1 >= this.state.maxIncorrectBlocksNum;
+        };
         }
 
     onBlockClick = (e) => {
@@ -70,7 +61,6 @@ class MemoryPuzzle extends Component {
         
       
         let correct = correctBlocks.indexOf(blockNum) !== -1;
-        console.log(blockNum, correct, correctBlocks);
         if(correct){
             this.setState({ correct: [...this.state.correct, blockNum] });
         }
@@ -78,7 +68,7 @@ class MemoryPuzzle extends Component {
             this.setState({ incorrect: [...this.state.incorrect, blockNum] });
         };
         
-        this.checkWinOrLost();
+        
         
     }
     
@@ -86,7 +76,9 @@ class MemoryPuzzle extends Component {
         this.setState({size:Number(e.target.value)})
     }
 
-    
+    componentDidUpdate(){
+        this.checkWinOrLost();
+    }
 
     render() {
         const styleGrid = {'gridTemplateColumns': "1fr ".repeat(this.state.size), 'gridTemplateRows': "1fr ".repeat(this.state.size)}
@@ -110,7 +102,7 @@ class MemoryPuzzle extends Component {
                 </div>
                     
                 <div className="button-row">
-                    <span className="restart-button" onClick={() => {console.log("restart clicked");this.restartGame(this.state.size)}}>Restart</span>
+                    <span className="restart-button" onClick={() => {this.restartGame(this.state.size)}}>Restart</span>
             </div> 
         </div>
         );
