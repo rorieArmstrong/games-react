@@ -14,10 +14,9 @@ div.grid{
   margin: 20px auto;
   width: 700px;
   height: 700px;
-  background: #2D3139;
-  display: grid;
+  background: #2D3139;  
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-temaplte-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
+  display: grid;
   gap: 20px;
   padding: 10px;
 }

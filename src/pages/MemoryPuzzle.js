@@ -78,13 +78,19 @@ class MemoryPuzzle extends Component {
         
     }
     
+    setSize = (e) => {
+        this.setState({size:e.target.value})
+    }
+
+    
 
     render() {
+        const styleGrid = {'gridTemplateColumns': "1fr ".repeat(this.state.size), 'gridTemplateRows': "1fr ".repeat(this.state.size)}
         return (
             <div> 
                 <div className='group'>
                     <h2>Size: </h2>
-                    <select className="size" id="size">
+                    <select className="size" id="size" onChange={this.setSize}>
                         <option value='5'>5</option>
                         <option value='6'>6</option>
                         <option value='7'>7</option>
@@ -93,7 +99,7 @@ class MemoryPuzzle extends Component {
                         <option value='10'>10</option>
                     </select>
                 </div>
-                <div className={this.state.gridClass} id='grid'>
+                <div className={this.state.gridClass} id='grid' style={styleGrid}>
                     {[...Array((this.state.size)**2).keys()].map(i => {
                             return (<div id={i} className={`block block-${i+1} ${this.state.correct.includes(i) ? "clicked correct" : this.state.incorrect.includes(i) ? "incorrect": ""} `} onClick={(e) => {this.onBlockClick(e)}} key={i}></div>)})
                     }
