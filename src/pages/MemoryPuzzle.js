@@ -19,15 +19,19 @@ class MemoryPuzzle extends Component {
     generateRandomNumberBetween = (min=1,max=(this.state.size)**2,length = 2*(this.state.size+1)) => {
         var arr = [];
         while(arr.length < length){
+            console.log("generated grid");
             var r = Math.floor(Math.random() * (max+1-min)) + min;
-            if(arr.indexOf(r) === -1) arr.push(r);
+            if(arr.indexOf(r) === -1) {arr.push(r)};
         }
         return arr;
         };
 
-    restartGame = () => {
-        let grid = this.generateRandomNumberBetween()
+    restartGame = (size) => {
+        console.log("restarting...",2*(size+1));
+        var grid = this.generateRandomNumberBetween(1,size**2,2*(size+1));
+        console.log("generated grid");
         this.setState({activateClicking : false, gridCorrectBlocks: grid, correct: grid, gridClass:'grid', incorrect: []});
+        console.log("restarting...");
         setTimeout(()=>{
             this.setState({activateClicking : true, correct: []})
             console.log("Restarted")
@@ -79,7 +83,7 @@ class MemoryPuzzle extends Component {
     }
     
     setSize = (e) => {
-        this.setState({size:e.target.value})
+        this.setState({size:Number(e.target.value)})
     }
 
     
@@ -106,7 +110,7 @@ class MemoryPuzzle extends Component {
                 </div>
                     
                 <div className="button-row">
-                    <span className="restart-button" onClick={() => {this.restartGame()}}>Restart</span>
+                    <span className="restart-button" onClick={() => {console.log("restart clicked");this.restartGame(this.state.size)}}>Restart</span>
             </div> 
         </div>
         );
