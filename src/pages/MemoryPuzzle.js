@@ -30,6 +30,10 @@ class MemoryPuzzle extends Component {
         this.setState({activateClicking : false, gridCorrectBlocks: grid, correct: grid, gridClass:'grid', incorrect: []});
         setTimeout(()=>{
             this.setState({activateClicking : true, correct: []})
+            setTimeout(()=>{ 
+                if(this.state.activateClicking){this.setState({gridClass:'grid lost', activateClicking : false, correct: this.state.gridCorrectBlocks});
+                return "lost";}
+            },this.state.timeUntilLose*1000);
         }, this.state.timeBlocksShows*1000);
         }
     
