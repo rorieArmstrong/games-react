@@ -31,8 +31,9 @@ class MemoryPuzzle extends Component {
         setTimeout(()=>{
             this.setState({activateClicking : true, correct: []})
             setTimeout(()=>{ 
-                if(this.state.activateClicking){this.setState({gridClass:'grid lost', activateClicking : false, correct: this.state.gridCorrectBlocks});
-                return "lost";}
+                if(this.state.activateClicking){
+                    this.setState({gridClass:'grid lost', activateClicking : false, correct: this.state.gridCorrectBlocks});
+                    return "lost";}
             },this.state.timeUntilLose*1000);
         }, this.state.timeBlocksShows*1000);
         }
